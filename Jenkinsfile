@@ -1,16 +1,11 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Default Maven'   // Usa Maven instalado en Jenkins
-        jdk   'Default JDK'      // Usa el JDK por defecto
-    }
-
     stages {
 
         stage('Checkout') {
             steps {
-                echo 'Descargando código desde GitHub...'
+                echo 'Clonando repositorio desde GitHub...'
                 git branch: 'main', url: 'https://github.com/Kyrubi/repositorio-de-prueba-para-expe-quiero-dormir.git'
             }
         }
@@ -24,14 +19,14 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'Ejecutando tests...'
+                echo 'Ejecutando pruebas...'
                 sh 'mvn test'
             }
         }
 
         stage('Package') {
             steps {
-                echo 'Empaquetando JAR final...'
+                echo 'Generando artefacto final (JAR)...'
                 sh 'mvn package'
             }
         }
@@ -45,10 +40,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline ejecutado correctamente 🎉'
+            echo 'CI completado correctamente 🎉'
         }
         failure {
-            echo 'Pipeline falló ❌'
+            echo 'CI falló ❌'
         }
     }
 }
